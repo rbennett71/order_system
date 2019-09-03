@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
-  has_many   :order_items
-  has_many  :percentages, inverse_of: :product
+  has_many :order_items
+  has_many :percentages, inverse_of: :product
   has_many :vendors, through: :percentages
   accepts_nested_attributes_for :percentages, allow_destroy: true
 
