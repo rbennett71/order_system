@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
-
   def home
   end
   # GET /products
@@ -29,16 +28,8 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    # parms = product_params
-    # parms = product_params.dup
-    # vendor_parms = parms.extract![:vendors_attributes]
     @product = Product.new(product_params)
-    @product.save
-# a =  @vendor_params[:vendors_attributes].to_hash
-#     a.each do |x|
-#       warn "x = #{x.inspect}"
-#       warn "asdfadxf"
-#     end
+
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
@@ -53,8 +44,6 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
-    # a = product_params.to_hash
-    # a["vendors_attributes"]["0"]["percentages_attributes"]["0"]["id"] = '1'
     respond_to do |format|
       if @product.update_attributes(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
@@ -86,20 +75,8 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
-
-
     params.require(:product).permit(:id,:name, :sku, :count, :description, :supplier_id, :price,
                                       percentages_attributes: [:id, :percentage, :product_id, :vendor_id]
                                     )
-    #
-    # @vendor_params = parms.extract! :vendors_attributes
-    # parms
   end
 end
-
-
-#
-#     params.require(:product).permit(:id,:name, :sku, :count, :description, :supplier_id, :price,
-#                                     vendors_attributes: [:id, :product_id, :name,
-#                                                          percentages_attributes: [:id, :percentage, :product_id, :vendor_id]
-#                                     ])
