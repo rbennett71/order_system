@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Customer name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.customer_name %></td>
+      </tr>
+
+      <% order.order_items.each do |item| %>
+        <tr>
+        <td></td><td><%= item.product.name %></td><td><%= item.count %></td>
+        </tr>
+        <% item.allocation_note.split("|").each do |line| %>
+        <tr>
+          <td></td><td></td><td><%= line %></td>
+        </tr>
+        <% end  %>
+      <% end %>
+
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'New Order', new_order_path %>

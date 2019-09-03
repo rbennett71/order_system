@@ -1,0 +1,68 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% product.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sku %>
+    <%= form.text_field :sku %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+
+  <%#= form.fields_for :vendors do |builder| %>
+
+    <%#= render 'vendor_fields', f:builder %>
+
+<!--    <fieldset>-->
+      <%#= builder.label :name, "Vendor" %>
+      <%#= builder.text_area :name %>
+<!--    </fieldset>-->
+  <%# end %>
+
+  <table>
+    <tr>
+      <td>Vendor</td>
+      <td>Percentage</td>
+    </tr>
+    </thead>
+  <% vendor_count = @vendor %>
+  <% @vendors.each do |vendor| -%>
+    <tr>
+      <td><%= vendor.name %></td>
+      <td>
+        <%#= form.fields_for :vendors, vendor do |v| -%>
+          <%= form.fields_for :percentages, vendor.percentages.find_or_initialize_by(product: product) do |p| -%>
+            <%= p.text_area :percentage %>
+            <%= p.hidden_field :product_id, value: product.id %>
+            <%= p.hidden_field :vendor_id, value: vendor.id %>
+            <%#= p.text_area :id %>
+
+      <% end -%>
+        <%# end -%>
+      </td>
+    </tr>
+  <% end -%>
+  </table>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
