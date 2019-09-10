@@ -9,3 +9,4 @@ class Percentage < ApplicationRecord
   end
 
 end
+
