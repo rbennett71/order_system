@@ -13,7 +13,7 @@ class Product < ApplicationRecord
     total = self.percentages.sum{|p| p.percentage || 0}
 
     if total != 100
-      errors.add(:name, "Pecentages must total 100")
+      errors.add(:percentages, "Pecentages must total 100")
       return false
     else
       return true

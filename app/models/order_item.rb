@@ -3,19 +3,21 @@ class OrderItem < ApplicationRecord
 
   belongs_to :order
   belongs_to :product
+  before_save :compile_allocation_note
 
   def initialize params
     super
+
     self.product = Product.find_by_sku(params['sku'])
-    self.allocation_note = compile_allocation_note
   end
 
   def compile_allocation_note
     notes = []
-    self.product.percentages.each do |allocation|
-      next if allocation.percentage == 0
+    product.percentages.each do |allocation|
+      next if allocation.percentage.zero?
+
       notes << "#{allocation.vendor.name} is assigned #{((allocation.percentage.to_f * self.count)/100).round} based on (#{allocation.percentage}%)"
     end
-    notes.join("|")
+    self.allocation_note = notes.join('|')
   end
 end
