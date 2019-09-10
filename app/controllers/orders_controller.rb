@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
           end
         end
       end
-    # rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid
 
     end
 
